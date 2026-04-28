@@ -5,6 +5,10 @@ TagManager:
   serializedVersion: 3
   tags:
   - Ground
+  - Obstacle
+  - Coin
+  - SpeedBoost
+  - JumpBoost
   layers:
   - Default
   - TransparentFX
