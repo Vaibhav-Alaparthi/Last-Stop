@@ -25,7 +25,7 @@ public class LevelManager : MonoBehaviour
 
     void Start()
     {
-        currentLevel = 1;
+        currentLevel = GameSettings.selectedLevel;
 
         if (winPanel != null)
         {
@@ -39,23 +39,9 @@ public class LevelManager : MonoBehaviour
     {
         if (gameWon) return;
 
-        float z = player.position.z;
-
-        if (z >= level3EndZ)
+        if (player.position.z >= level3EndZ)
         {
             WinGame();
-        }
-        else if (z >= level2EndZ)
-        {
-            currentLevel = 3;
-        }
-        else if (z >= level1EndZ)
-        {
-            currentLevel = 2;
-        }
-        else
-        {
-            currentLevel = 1;
         }
 
         UpdateLevelText();
@@ -77,7 +63,5 @@ public class LevelManager : MonoBehaviour
         {
             winPanel.SetActive(true);
         }
-
-        Time.timeScale = 0f;
     }
 }

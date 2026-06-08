@@ -17,12 +17,13 @@ public class PlayerPowerUps : MonoBehaviour
     void Start()
     {
         movement = GetComponent<PlayerMovement>();
-        UpdateCoinText();
 
         if (powerUpPulse != null)
         {
             powerUpPulse.SetActive(false);
         }
+
+        UpdateCoinText();
     }
 
     void OnTriggerEnter(Collider other)
@@ -30,7 +31,11 @@ public class PlayerPowerUps : MonoBehaviour
         if (other.CompareTag("Coin"))
         {
             coins++;
+
+            CoinBank.TotalCoins += 1;
+
             UpdateCoinText();
+
             Destroy(other.gameObject);
         }
 
@@ -48,6 +53,11 @@ public class PlayerPowerUps : MonoBehaviour
 
         if (other.CompareTag("Shield"))
         {
+            if (SoundManager.instance != null)
+            {
+                SoundManager.instance.PlayShield();
+            }
+
             StartCoroutine(ShieldRoutine());
             Destroy(other.gameObject);
         }
@@ -56,22 +66,29 @@ public class PlayerPowerUps : MonoBehaviour
     IEnumerator SpeedBoostRoutine()
     {
         StartPowerUpVisual();
+
         movement.SpeedBoost(4f, 5f);
+
         yield return new WaitForSeconds(5f);
+
         StopPowerUpVisual();
     }
 
     IEnumerator JumpBoostRoutine()
     {
         StartPowerUpVisual();
-        movement.JumpBoost(6f, 5f);
+
+        movement.JumpBoost(2f, 4f);
+
         yield return new WaitForSeconds(5f);
+
         StopPowerUpVisual();
     }
 
     IEnumerator ShieldRoutine()
     {
         StartPowerUpVisual();
+
         hasShield = true;
 
         while (hasShield)
@@ -111,7 +128,7 @@ public class PlayerPowerUps : MonoBehaviour
     {
         if (coinText != null)
         {
-            coinText.text = "Coins: " + coins;
+            coinText.text = "Coins: " + CoinBank.TotalCoins;
         }
     }
 }

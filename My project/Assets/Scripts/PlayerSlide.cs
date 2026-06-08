@@ -33,6 +33,7 @@ public class PlayerSlide : MonoBehaviour
     IEnumerator SlideRoutine()
     {
         isSliding = true;
+        SoundManager.instance.PlaySlide();
 
         capsule.height = slidingHeight;
         capsule.center = slidingCenter;

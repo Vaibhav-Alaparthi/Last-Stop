@@ -15,6 +15,22 @@ public class ObstacleSpawner : MonoBehaviour
 
     private float[] lanes = { -3f, 0f, 3f };
 
+    void Start()
+    {
+        if (GameSettings.selectedLevel == 1)
+        {
+            spawnSpacing = 28f;
+        }
+        else if (GameSettings.selectedLevel == 2)
+        {
+            spawnSpacing = 18f;
+        }
+        else if (GameSettings.selectedLevel == 3)
+        {
+            spawnSpacing = 14f;
+        }
+    }
+
     void Update()
     {
         if (player.position.z + spawnDistanceAhead > nextSpawnZ)
@@ -47,13 +63,13 @@ public class ObstacleSpawner : MonoBehaviour
         }
         else
         {
-            int random = Random.Range(0, 3);
+            int random = Random.Range(0, 10);
 
-            if (random == 0)
+            if (random < 3)
             {
                 SpawnSingleObstacle(jumpObstacle);
             }
-            else if (random == 1)
+            else if (random < 6)
             {
                 SpawnSingleObstacle(slideObstacle);
             }
